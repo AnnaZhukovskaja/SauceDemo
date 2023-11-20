@@ -1,6 +1,5 @@
 package tests;
 
-import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -8,11 +7,10 @@ import static org.testng.Assert.assertEquals;
 public class LoginTest extends BaseTest {
 
     @Test
-    public void succesfulLogin() {
+    public void successfulLogin() {
         loginPage.open();
         loginPage.login("standard_user","secret_sauce");
         assertEquals(productsPage.getTitle(),"Products","User is not logged in or wrong page is open");
-
     }
 
     @Test

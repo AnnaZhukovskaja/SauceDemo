@@ -27,4 +27,8 @@ public class LoginPage extends BasePage {
     public String getError() {
         return driver.findElement(ERROR_MESSAGE).getText();
     }
+
+    public boolean isDisplayedLoginButton() {
+        return driver.findElement(LOGIN_BUTTON).isDisplayed();
+    }
 }
