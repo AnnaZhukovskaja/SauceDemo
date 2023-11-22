@@ -55,7 +55,7 @@ public class CartPage extends BasePage {
         driver.findElement(By.xpath(String.format(REMOVE_BUTTON,fullValueOfProductNameAttribute)));
     }
 
-    public void openPageAllProducts() {
+    public void continueShopping() {
         driver.findElement(CONTINUE_BUTTON).click();
     }
 

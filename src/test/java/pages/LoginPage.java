@@ -8,7 +8,7 @@ public class LoginPage extends BasePage {
     private final By USERNAME_INPUT = By.id("user-name");
     private final By PASSWORD_INPUT = By.id("password");
     private final By LOGIN_BUTTON = By.id("login-button");
-    private final By ERROR_MESSAGE = By.xpath("//*[@id='login_button_container']/div/form/div[3]/h3");
+    private final By ERROR_MESSAGE = By.xpath("//*[@data-test='error']");
 
     public LoginPage(WebDriver driver) {
         super(driver);

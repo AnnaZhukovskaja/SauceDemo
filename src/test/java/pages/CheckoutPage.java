@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CheckoutPage  extends BasePage{
 
@@ -34,6 +35,9 @@ public class CheckoutPage  extends BasePage{
         driver.findElement(CONTINUE_BUTTON).click();
     }
 
+    public void isOpened() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(CHECKOUT_BUTTON));
+    }
     public String getTitle() {
         return driver.findElement(TITLE).getText();}
 
