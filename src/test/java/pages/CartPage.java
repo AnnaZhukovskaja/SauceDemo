@@ -12,7 +12,7 @@ public class CartPage extends BasePage {
 
     private final By PRODUCT_NAME = By.cssSelector(".inventory_item_name");
     private final By PRODUCT_PRICE = By.cssSelector(".inventory_item_price");
-    private final String REMOVE_BUTTON = "//button [@data-test ='%s']";
+    private final String REMOVE_BUTTON_PATTERN = "//*[text()='%s']/ancestor::div[@class='cart_item']//button[text()='Remove']"; //"//button [@data-test ='%s']";
     private final By CONTINUE_BUTTON = By.cssSelector("[data-test='continue-shopping']");
     private final String PRODUCTS_PRICES = "//*[text()='%s']/ancestor::div[@class='cart_item']//*[@class='inventory_item_price']";
 
@@ -45,14 +45,7 @@ public class CartPage extends BasePage {
     }
 
     public void removeProduct(String product) {
-        String[] arrayOfWordsInProductName = product.split(" ");
-        StringBuilder partOfValueOfProductNameAttribute = new StringBuilder("remove-");
-        for (int i = 0; i < arrayOfWordsInProductName.length; i++) {
-            partOfValueOfProductNameAttribute.append(arrayOfWordsInProductName[i].toLowerCase());
-            partOfValueOfProductNameAttribute.append("-");
-        }
-        StringBuilder fullValueOfProductNameAttribute = partOfValueOfProductNameAttribute.deleteCharAt(partOfValueOfProductNameAttribute.length()-1);
-        driver.findElement(By.xpath(String.format(REMOVE_BUTTON,fullValueOfProductNameAttribute)));
+        driver.findElement(By.xpath(String.format(REMOVE_BUTTON_PATTERN,product))).click();
     }
 
     public void continueShopping() {

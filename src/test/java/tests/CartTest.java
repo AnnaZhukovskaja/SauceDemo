@@ -14,7 +14,7 @@ public class CartTest extends BaseTest {
         productsPage.addToCart("Sauce Labs Onesie");
         cartPage.open();
         cartPage.removeProduct("Sauce Labs Bike Light");
-        assertTrue(cartPage.getProductsName().contains("Sauce Labs Bike Light"), "The Remove button  didn't remove the product from the cart.");
+        assertFalse(cartPage.getProductsName().contains("Sauce Labs Bike Light"), "The Remove button didn't remove the product from the cart.");
     }
 
     @Test(description = "Проверить, что после перехода(кнопка Continue Shopping) из корзины(Cart) к списку товарок в  товары не удаляются")

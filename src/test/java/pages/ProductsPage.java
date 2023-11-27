@@ -7,7 +7,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ProductsPage extends BasePage {
@@ -43,32 +42,11 @@ public class ProductsPage extends BasePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("checkout")));
     }
 
-    public void selectSortingFromAToZ() {
+    public void sort(String sorting) {
         WebElement dropDownMenu = driver.findElement(PRODUCT_SORT_CONTAINER);
         Select select = new Select(dropDownMenu);
         dropDownMenu.click();
-        select.selectByVisibleText("Name (A to Z)");
-    }
-
-    public  void selectSortingFromZToA() {
-        WebElement dropDownMenu = driver.findElement(PRODUCT_SORT_CONTAINER);
-        Select select = new Select(dropDownMenu);
-        dropDownMenu.click();
-        select.selectByVisibleText("Name (Z to A)");
-    }
-
-    public  void selectSortingFromLowToHigh() {
-        WebElement dropDownMenu = driver.findElement(PRODUCT_SORT_CONTAINER);
-        Select select = new Select(dropDownMenu);
-        dropDownMenu.click();
-        select.selectByVisibleText("Price (low to high)");
-    }
-
-    public  void selectSortingFromHighToLow() {
-        WebElement dropDownMenu = driver.findElement(PRODUCT_SORT_CONTAINER);
-        Select select = new Select(dropDownMenu);
-        dropDownMenu.click();
-        select.selectByVisibleText("Price (high to low)");
+        select.selectByVisibleText(sorting);
     }
 
     public ArrayList<String> getProductNames() {
@@ -80,32 +58,7 @@ public class ProductsPage extends BasePage {
         return names;
     }
 
-    public boolean isProductsSortedFromAToZ() {
-        ArrayList<String> namesWithoutSorting = getProductNames();
-        Collections.sort(namesWithoutSorting);
-        selectSortingFromAToZ();
-        ArrayList<String> namesWithSorting = getProductNames();
-        return namesWithoutSorting.equals(namesWithSorting);
-    }
-
-    public boolean isProductsSortedFromZToA() {
-        ArrayList<String> namesWithoutSorting = getProductNames();
-        Collections.sort(namesWithoutSorting);
-        selectSortingFromZToA();
-        ArrayList<String> namesWithSorting = getProductNames();
-        namesWithSorting.sort(Collections.reverseOrder());
-        return namesWithoutSorting.equals(namesWithSorting);
-    }
-
-    public boolean isProductsSortedFromLowToHigh() {
-        ArrayList<String> pricesWithoutSorting = getProductsPrice();
-        Collections.sort(pricesWithoutSorting);
-        selectSortingFromLowToHigh();
-        ArrayList<String> pricesWithSorting = getProductNames();
-        return pricesWithoutSorting.equals(pricesWithSorting);
-    }
-
-    public ArrayList<String> getProductsPrice() {
+     public ArrayList<String> getProductsPrice() {
         List<WebElement> allProductElements = driver.findElements(PRODUCT_PRICE);
         ArrayList<String> prices = new ArrayList<>();
         for (WebElement product: allProductElements) {
@@ -114,16 +67,7 @@ public class ProductsPage extends BasePage {
         return prices;
     }
 
-    public boolean isProductsSortedFromHighToLow() {
-        ArrayList<String> pricesWithoutSorting = getProductsPrice();
-        Collections.sort(pricesWithoutSorting);
-        pricesWithoutSorting.sort(Collections.reverseOrder());
-        selectSortingFromHighToLow();
-        ArrayList<String> pricesWithSorting = getProductNames();
-        return pricesWithoutSorting.equals(pricesWithSorting);
-    }
-
-    public void openMenu() {
+      public void openMenu() {
         driver.findElement(MENU_BUTTON).click();
     }
 

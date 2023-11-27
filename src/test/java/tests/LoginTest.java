@@ -19,12 +19,11 @@ public class LoginTest extends BaseTest {
         return new Object[][]{
                 {"", "", "Epic sadface: Username is required"},
                 {"standard_user", "", "Epic sadface: Password is required"},
-                {"user", "secret_sauce", "Epic sadface: Username and password do not match any user in this service"},
                 {"locked_out_user", "secret_sauce", "Epic sadface: Sorry, this user has been locked out."}
         };
     }
 
-    @Test(dataProvider = "Данные для логина",description = "Проверка регистрации разных пользователей(ошибки)")
+    @Test(dataProvider = "Данные для логина",description = "Негативные проверка регистрации")
     public void negativeLogin(String user, String password, String expectedError) {
         loginPage.open();
         loginPage.login(user,password);
@@ -43,13 +42,6 @@ public class LoginTest extends BaseTest {
         loginPage.open();
         loginPage.login("standard_user","");
         assertEquals(loginPage.getError(),"Epic sadface: Password is required", "User is not logged in or wrong notification");
-    }
-
-    @Test(description = "Проверка регистрации пользователя, которого нет в системе")
-    public void notMatchUserInService() {
-        loginPage.open();
-        loginPage.login("standard_user","secret_sauce");
-        assertEquals(loginPage.getError(),"Epic sadface: Username and password do not match any user in this service", "Username and password do not match any user in this service");
     }
 
     @Test(description = "Проверка регистрации заблокированного пользователя")

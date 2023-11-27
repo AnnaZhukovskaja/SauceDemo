@@ -11,7 +11,7 @@ import pages.CheckoutPage;
 import pages.LoginPage;
 import pages.ProductsPage;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 @Listeners(TestListener.class)
 public abstract class BaseTest {
 
@@ -24,6 +24,7 @@ public abstract class BaseTest {
     @Parameters({"browser"})
     @BeforeMethod(description = "Настройка браузера")
     public void setup(@Optional("chrome") String browser) {
+        System.out.println(System.getProperty("blabla"));
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
@@ -35,7 +36,7 @@ public abstract class BaseTest {
             WebDriverManager.edgedriver().setup();
             driver = new EdgeDriver();
         }
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         loginPage = new LoginPage(driver);
         productsPage = new ProductsPage(driver);
