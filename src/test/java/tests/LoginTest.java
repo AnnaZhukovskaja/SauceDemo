@@ -23,7 +23,7 @@ public class LoginTest extends BaseTest {
         };
     }
 
-    @Test(dataProvider = "Данные для логина",description = "Негативные проверка регистрации")
+    @Test(dataProvider = "Данные для логина",description = "Негативные проверки регистрации")
     public void negativeLogin(String user, String password, String expectedError) {
         loginPage.open();
         loginPage.login(user,password);

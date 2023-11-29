@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.testng.ITestContext;
 import org.testng.annotations.*;
 import pages.CartPage;
 import pages.CheckoutPage;
@@ -23,8 +24,8 @@ public abstract class BaseTest {
 
     @Parameters({"browser"})
     @BeforeMethod(description = "Настройка браузера")
-    public void setup(@Optional("chrome") String browser) {
-        System.out.println(System.getProperty("blabla"));
+    public void setup(@Optional("chrome") String browser, ITestContext iTestContext) {
+        System.out.println(System.getProperty("t"));
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
@@ -36,6 +37,7 @@ public abstract class BaseTest {
             WebDriverManager.edgedriver().setup();
             driver = new EdgeDriver();
         }
+        iTestContext.setAttribute("driver",driver);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         loginPage = new LoginPage(driver);

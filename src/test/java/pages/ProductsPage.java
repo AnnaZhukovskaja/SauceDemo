@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,25 +24,30 @@ public class ProductsPage extends BasePage {
         super(driver);
     }
 
+    @Step("Opening products page")
     public void open() {
         driver.get(BASE_URL + "inventory.html");
     }
 
+    @Step("Getting title Products")
     public String getTitle() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(TITLE));
         return driver.findElement(TITLE).getText();
     }
 
+    @Step("Adding products in the cart")
     public void addToCart(String product) {
         By addToCartButton = By.xpath(String.format(ADD_TO_CART_PATTERN, product));
         driver.findElement(addToCartButton).click();
     }
 
+    @Step("Opening the cart")
     public void openCart() {
         driver.findElement(CART_LINK).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("checkout")));
     }
 
+    @Step("Sorting products")
     public void sort(String sorting) {
         WebElement dropDownMenu = driver.findElement(PRODUCT_SORT_CONTAINER);
         Select select = new Select(dropDownMenu);
@@ -49,6 +55,7 @@ public class ProductsPage extends BasePage {
         select.selectByVisibleText(sorting);
     }
 
+    @Step("Getting a list of product names")
     public ArrayList<String> getProductNames() {
         List<WebElement> allProductElements = driver.findElements(PRODUCT_NAME);
         ArrayList<String> names = new ArrayList<>();
@@ -58,6 +65,7 @@ public class ProductsPage extends BasePage {
         return names;
     }
 
+    @Step("Getting a list of product price")
      public ArrayList<String> getProductsPrice() {
         List<WebElement> allProductElements = driver.findElements(PRODUCT_PRICE);
         ArrayList<String> prices = new ArrayList<>();
@@ -67,10 +75,12 @@ public class ProductsPage extends BasePage {
         return prices;
     }
 
+    @Step("Opening menu")
       public void openMenu() {
         driver.findElement(MENU_BUTTON).click();
     }
 
+    @Step("Logout")
     public void logOut() {
         driver.findElement(LOGOUT_BUTTON).click();
     }
