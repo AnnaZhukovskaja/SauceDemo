@@ -1,6 +1,7 @@
 package tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,6 +14,7 @@ import pages.LoginPage;
 import pages.ProductsPage;
 
 import java.time.Duration;
+@Log4j2
 @Listeners(TestListener.class)
 public abstract class BaseTest {
 
@@ -25,6 +27,7 @@ public abstract class BaseTest {
     @Parameters({"browser"})
     @BeforeMethod(description = "Настройка браузера")
     public void setup(@Optional("chrome") String browser, ITestContext iTestContext) {
+        log.info("Setup browser");
         System.out.println(System.getProperty("t"));
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
@@ -48,6 +51,7 @@ public abstract class BaseTest {
 
     @AfterMethod(alwaysRun = true, description = "Закрытие браузера")
     public void tearDown() {
+        log.info("Closing the browser");
         driver.quit();
     }
 }
