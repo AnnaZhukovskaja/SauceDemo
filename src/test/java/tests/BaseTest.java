@@ -1,18 +1,21 @@
 package tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.testng.ITestContext;
+import org.testng.annotations.*;
 import pages.CartPage;
 import pages.CheckoutPage;
 import pages.LoginPage;
 import pages.ProductsPage;
 
-import java.util.concurrent.TimeUnit;
-
+import java.time.Duration;
+@Log4j2
+@Listeners(TestListener.class)
 public abstract class BaseTest {
 
     WebDriver driver;
@@ -21,14 +24,24 @@ public abstract class BaseTest {
     CartPage cartPage;
     CheckoutPage checkoutPage;
 
-    @BeforeMethod
-    public void setup() {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("start-maximized");
-        options.addArguments("headless");
-        driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    @Parameters({"browser"})
+    @BeforeMethod(description = "Настройка браузера")
+    public void setup(@Optional("chrome") String browser, ITestContext iTestContext) {
+        log.info("Setup browser");
+        System.out.println(System.getProperty("t"));
+        if (browser.equalsIgnoreCase("chrome")) {
+            WebDriverManager.chromedriver().setup();
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("start-maximized");
+            options.addArguments("headless");
+            driver = new ChromeDriver(options);
+        }
+        else if(browser.equalsIgnoreCase("opera")) {
+            WebDriverManager.edgedriver().setup();
+            driver = new EdgeDriver();
+        }
+        iTestContext.setAttribute("driver",driver);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         loginPage = new LoginPage(driver);
         productsPage = new ProductsPage(driver);
@@ -36,8 +49,9 @@ public abstract class BaseTest {
         checkoutPage = new CheckoutPage(driver);
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod(alwaysRun = true, description = "Закрытие браузера")
     public void tearDown() {
+        log.info("Closing the browser");
         if(driver != null) {
             driver.quit();
         }

@@ -6,7 +6,7 @@ import static org.testng.Assert.*;
 
 public class CartTest extends BaseTest {
 
-    @Test
+    @Test(description = "Проверка , что можно удалить заказ из корзины")
     public void removeProduct() {
         loginPage.open();
         loginPage.login("standard_user","secret_sauce");
@@ -14,22 +14,22 @@ public class CartTest extends BaseTest {
         productsPage.addToCart("Sauce Labs Onesie");
         cartPage.open();
         cartPage.removeProduct("Sauce Labs Bike Light");
-        assertTrue(cartPage.getProductsName().contains("Sauce Labs Bike Light"), "The Remove button  didn't remove the product from the cart.");
+        assertFalse(cartPage.getProductsName().contains("Sauce Labs Bike Light"), "The Remove button didn't remove the product from the cart.");
     }
 
-    @Test
+    @Test(description = "Проверить, что после перехода(кнопка Continue Shopping) из корзины(Cart) к списку товарок в  товары не удаляются")
     public void productShouldBeNotRemoveInCartAfterExitingTheCart() {
         loginPage.open();
         loginPage.login("standard_user","secret_sauce");
         productsPage.addToCart("Sauce Labs Bike Light");
         cartPage.open();
-        cartPage.openPageAllProducts();
+        cartPage.continueShopping();
         productsPage.addToCart("Sauce Labs Onesie");
         cartPage.open();
         assertTrue(cartPage.getProductsName().contains("Sauce Labs Bike Light"), "The products were not saved in the cart");
     }
 
-    @Test
+    @Test(description = "Проверить, что после покупки 6 товаров в корзине все цены товаров верные")
     public void allProductShouldBeHaveRightPrice() {
         loginPage.open();
         loginPage.login("standard_user","secret_sauce");
