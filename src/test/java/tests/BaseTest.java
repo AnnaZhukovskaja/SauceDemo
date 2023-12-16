@@ -6,6 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
 import pages.CartPage;
@@ -26,7 +29,7 @@ public abstract class BaseTest {
 
     @Parameters({"browser"})
     @BeforeMethod(description = "Настройка браузера")
-    public void setup(@Optional("edge") String browser, ITestContext iTestContext) {
+    public void setup(@Optional("chrome") String browser, ITestContext iTestContext) {
         log.info("Setup browser");
         System.out.println(System.getProperty("t"));
         if (browser.equalsIgnoreCase("chrome")) {
@@ -38,7 +41,15 @@ public abstract class BaseTest {
         }
         else if(browser.equalsIgnoreCase("edge")) {
             WebDriverManager.edgedriver().setup();
-            driver = new EdgeDriver();
+            EdgeOptions edgeOptions = new EdgeOptions();
+            edgeOptions.addArguments("--headless");
+            driver = new EdgeDriver(edgeOptions);
+        }
+        else if(browser.equalsIgnoreCase("firefox")) {
+            WebDriverManager.firefoxdriver().setup();
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions .addArguments("--headless");
+            driver = new FirefoxDriver(firefoxOptions);
         }
         iTestContext.setAttribute("driver",driver);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
