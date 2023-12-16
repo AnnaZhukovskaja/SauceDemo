@@ -26,7 +26,7 @@ public abstract class BaseTest {
 
     @Parameters({"browser"})
     @BeforeMethod(description = "Настройка браузера")
-    public void setup(@Optional("chrome") String browser, ITestContext iTestContext) {
+    public void setup(@Optional("edge") String browser, ITestContext iTestContext) {
         log.info("Setup browser");
         System.out.println(System.getProperty("t"));
         if (browser.equalsIgnoreCase("chrome")) {
@@ -36,7 +36,7 @@ public abstract class BaseTest {
             options.addArguments("headless");
             driver = new ChromeDriver(options);
         }
-        else if(browser.equalsIgnoreCase("opera")) {
+        else if(browser.equalsIgnoreCase("edge")) {
             WebDriverManager.edgedriver().setup();
             driver = new EdgeDriver();
         }
